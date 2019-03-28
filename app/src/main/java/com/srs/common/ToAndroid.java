@@ -1,11 +1,11 @@
 package com.srs.common;
 
-import com.example.sfcontrolclient.CommonClass.AbstractMessage;
-
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ToAndroid extends AbstractMessage {
+public class ToAndroid implements Serializable {
+    private static final long serialVersionUID =3201728743084568826L;
     private String kdName;
     private Map<Integer,Integer> paramArray = new HashMap<>();
 

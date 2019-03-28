@@ -1,7 +1,9 @@
 package com.srs.common;
 
+import android.util.Log;
+
 public class ParamName{
-    public static String getNameByIt(Integer type){
+    private static String getNameByIt(Integer type){
         switch (type) {
             case 1:
                 return "Занимает памяти";
@@ -16,4 +18,21 @@ public class ParamName{
         }
         return "Неизвестно";
     }
+    public static String getStringByIt(String nameKD, Integer type, Integer value){
+        String fullStr =  "ЦПУ("+nameKD+") - "+ ParamName.getNameByIt(type)+": ";
+        if(value==0)
+            fullStr = fullStr + "Нет";
+        else{
+            if(value==1)
+                fullStr = fullStr + "Да";
+            else
+                fullStr = fullStr + value;
+        }
+        if(type==1)
+            fullStr = fullStr + " KB";
+        Log.d("Отладка", fullStr);
+
+        return fullStr;
+    }
+
 }

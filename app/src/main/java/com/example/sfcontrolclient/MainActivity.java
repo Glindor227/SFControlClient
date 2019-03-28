@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if(!Network.start("192.168.1.65",8190))
+                if(!Network.start("192.168.1.39",8190))
                     return;
                 while (true){
                     ToAndroid[] ret = Network.ping();
@@ -65,20 +65,10 @@ public class MainActivity extends AppCompatActivity {
 // получаем экземпляр элемента ListView
                 ListView listView = (ListView)findViewById(R.id.paramList);
                 List<String> parArrey = new ArrayList<>();
-                for (int i=0;i<params.length;i++){
-                    Map<Integer,Integer> ta = params[i].getParams();
-                    for (Integer paramName:ta.keySet()){
-                        String fullStr =  "ЦПУ("+params[i].getKdName()+") - "+ ParamName.getNameByIt(paramName)+": ";
-                        if(ta.get(paramName)==0)
-                            fullStr = fullStr + "Нет";
-                        else
-                            if(ta.get(paramName)==1)
-                                fullStr = fullStr + "Есть";
-                            else
-                                fullStr = fullStr + ta.get(paramName);
-
-
-                        parArrey.add(fullStr);
+                for (ToAndroid param : params) {
+                    Map<Integer, Integer> ta = param.getParams();
+                    for (Integer paramName : ta.keySet()) {
+                        parArrey.add(ParamName.getStringByIt(param.getKdName(), paramName, ta.get(paramName)));
                     }
                 }
 
