@@ -1,7 +1,5 @@
 package com.example.sfcontrolclient;
 
-
-
 import android.util.Log;
 
 import com.srs.common.ToAndroid;
@@ -16,8 +14,6 @@ class Network {
     private static  final String TAG ="Отладка";
 
     private static Socket socket;
-//    private static ObjectOutputStream out;
-  //  private static ObjectInputStream in;
     private static ObjectOutputStream out;
     private static ObjectInputStream in;
 
@@ -90,27 +86,5 @@ class Network {
         }
     }
 
-    static boolean sendMsg() {
-        try {
-            if (out!=null){
-//                out.writeObject(new String("1234"));
-                out.flush();
-                return true;
-            }
-            Log.d(TAG, "sendMsg: не инициализирован out");
-
-            return false;
-        } catch (IOException e) {
-            Log.d(TAG, "sendMsg: IOException");
-            e.printStackTrace();
-        }
-        return false;
-    }
-/*
-    static AbstractMessage readObject() throws ClassNotFoundException, IOException {
-        Object obj = in.readObject();
-        return (AbstractMessage)obj;
-    }
-    */
 }
 

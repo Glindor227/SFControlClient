@@ -1,4 +1,4 @@
-package com.srs.common;
+package com.example.sfcontrolclient;
 
 import android.util.Log;
 
@@ -30,7 +30,7 @@ public class ParamName{
         }
         if(type==1)
             fullStr = fullStr + " KB";
-        Log.d("Отладка", fullStr);
+        Log.d(MainActivity.TAG, fullStr);
 
         return fullStr;
     }

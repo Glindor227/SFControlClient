@@ -11,8 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.srs.common.ParamName;
 import com.srs.common.ToAndroid;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
-    private static  final String TAG ="Отладка";
+    public static  final String TAG ="Отладка";
 
 
 
@@ -130,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Log.d(TAG, "Нажали Setting!");
+
             return true;
         }
 
