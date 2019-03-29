@@ -10,8 +10,9 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.srs.common.ToAndroid;
 
@@ -27,11 +28,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     protected void NetworkRun() {
+
+        EditText etIP = findViewById(R.id.ipServer);
+        Network.setServerIP(etIP.getText().toString());
+
         Log.d(TAG, "NetworkRun0");
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if(!Network.start("192.168.1.39",8190))
+                if(!Network.start(8190))
                     return;
                 while (true){
                     ToAndroid[] ret = Network.ping();
@@ -63,13 +68,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 // получаем экземпляр элемента ListView
-                ListView listView = (ListView)findViewById(R.id.paramList);
+                ListView listView = findViewById(R.id.paramList);
                 List<String> parArrey = new ArrayList<>();
-                for (ToAndroid param : params) {
-                    Map<Integer, Integer> ta = param.getParams();
-                    for (Integer paramName : ta.keySet()) {
-                        parArrey.add(ParamName.getStringByIt(param.getKdName(), paramName, ta.get(paramName)));
+                if(params!=null){
+                    for (ToAndroid param : params) {
+                        Map<Integer, Integer> ta = param.getParams();
+                        for (Integer paramName : ta.keySet()) {
+                            parArrey.add(ParamName.getStringByIt(param.getKdName(), paramName, ta.get(paramName)));
+                        }
                     }
+                }
+                else{
+                    parArrey.add("Нет связи с сервером");
                 }
 
 
@@ -108,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         });
         Log.d(TAG, "onCreate: ");
 
-        NetworkRun();
+
 
 
 
@@ -136,5 +146,28 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onConnectClick(View view) {
+        if(Network.isActive()){
+            Log.d(TAG, "Сеть активна - останавливаем!");
+            Network.stop();
+            listParamView(null);
+        }
+        Log.d(TAG, "Стартуем сеть!");
+        NetworkRun();
+
+        LinearLayout llAuto = findViewById(R.id.autoLayout);
+        llAuto.setVisibility(View.GONE);
+        llAuto.invalidate();
+
+        LinearLayout llIP = findViewById(R.id.ipLayout);
+        llIP.setVisibility(View.GONE);
+        llIP.invalidate();
+
+
+
+
+
     }
 }

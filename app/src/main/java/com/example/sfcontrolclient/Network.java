@@ -16,14 +16,28 @@ class Network {
     private static Socket socket;
     private static ObjectOutputStream out;
     private static ObjectInputStream in;
+    private static String serverIP = "127.0.0.1";
 
-    static boolean start(String ip,Integer port) {
+    public static String getServerIP() {
+        return serverIP;
+    }
+
+    public static void setServerIP(String serverIP) {
+        Network.serverIP = serverIP;
+    }
+
+    public static Boolean isActive(){
+        if((socket!=null)&&(socket.isConnected()))
+            return true;
+        return false;
+    }
+    static boolean start(Integer port) {
         System.out.println("Запускаем Network");
         try {
             Log.d(TAG, "Network.start: begin0");
             socket = new Socket();
-            Log.d(TAG, "Network.start: begin1");
-            socket.connect(new InetSocketAddress(ip, port));
+            Log.d(TAG, "Network.start: begin1 ip = "+serverIP);
+            socket.connect(new InetSocketAddress(serverIP, port));
             Log.d(TAG, "Network.start: begin2");
             out = new ObjectOutputStream(socket.getOutputStream());
             Log.d(TAG, "Network.start: begin3");
