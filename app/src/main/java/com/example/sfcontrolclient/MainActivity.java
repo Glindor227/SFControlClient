@@ -29,20 +29,22 @@ public class MainActivity extends AppCompatActivity {
 
     protected void NetworkRun() {
 
-        EditText etIP = findViewById(R.id.ipServer);
-        Network.setServerIP(etIP.getText().toString());
+        final EditText etIP = findViewById(R.id.ipServer);
+        final EditText etLogin = findViewById(R.id.login);
+        final EditText etPass = findViewById(R.id.password);
 
         Log.d(TAG, "NetworkRun0");
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if(!Network.start(8190))
+                if(!Network.start(etIP.getText().toString(),8190,etLogin.getText().toString(),etPass.getText().toString()))
                     return;
                 while (true){
                     ToAndroid[] ret = Network.ping();
                     if (ret==null){
                         Log.d(TAG, "Network Ошибка обмена с сервером");
-                        return;}
+                        return;
+                    }
                     for (ToAndroid ta_rez:ret) {
                         Log.d(TAG, "Network.start: пришло:"+ta_rez.getKdName()+" Массив :"+ta_rez.getParams());
                     }
