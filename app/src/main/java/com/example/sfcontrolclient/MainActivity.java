@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.srs.common.PairValueAlarm;
 import com.srs.common.ToAndroid;
 
 import java.util.ArrayList;
@@ -72,16 +73,27 @@ public class MainActivity extends AppCompatActivity {
 // получаем экземпляр элемента ListView
                 ListView listView = findViewById(R.id.paramList);
                 List<String> parArrey = new ArrayList<>();
-                if(params!=null){
+/*                if(params!=null){
                     for (ToAndroid param : params) {
-                        Map<Integer, Integer> ta = param.getParams();
+                        Map<Integer, PairValueAlarm> ta = param.getParams();
                         for (Integer paramName : ta.keySet()) {
-                            parArrey.add(ParamName.getStringByIt(param.getKdName(), paramName, ta.get(paramName)));
+                            parArrey.add(ParamName.getStringByIt(param.getKdName(), paramName, ta.get(paramName).getValue(),ta.get(paramName).getError()));
                         }
                     }
                 }
                 else{
                     parArrey.add("Нет связи с сервером");
+                }
+*/
+                List<Param> newParamsArray = new ArrayList<>();
+                for (ToAndroid kd : params) {
+                    String kdName = kd.getKdName();
+                    Map<Integer, PairValueAlarm> mapParams = kd.getParams();
+                    for (Integer paramType : mapParams.keySet()) {
+                        String strValue = ParamName.getValueStringById(paramType,mapParams.get(paramType).getValue());
+                        Param p = new Param(kdName,ParamName.getNameByIt(paramType),strValue,mapParams.get(paramType).getError());
+                        newParamsArray.add(p);
+                    }
                 }
 
 
@@ -95,10 +107,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 // используем адаптер данных
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this,
-                        android.R.layout.simple_list_item_1, parArrey);
+//                ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this,android.R.layout.simple_list_item_1, parArrey);
 
+
+                CustomListAdapter adapter =  new CustomListAdapter(MainActivity.this,newParamsArray);
                 listView.setAdapter(adapter);
+
 
             }
         });

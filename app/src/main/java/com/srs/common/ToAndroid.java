@@ -6,12 +6,12 @@ import java.util.Map;
 public class ToAndroid extends AbstractAndroid {
     private static final long serialVersionUID =3201728743084568826L;
     private String kdName;
-    private Map<Integer,Integer> paramArray = new HashMap<>();
+    private Map<Integer,PairValueAlarm> paramArray = new HashMap<>();
 
-    public Map<Integer,Integer> getParams() {
+    public Map<Integer,PairValueAlarm> getParams() {
         return paramArray;
     }
-    public void add(Integer name,Integer value){
+    public void add(Integer name,PairValueAlarm value){
         paramArray.put(name,value);
     }
 
